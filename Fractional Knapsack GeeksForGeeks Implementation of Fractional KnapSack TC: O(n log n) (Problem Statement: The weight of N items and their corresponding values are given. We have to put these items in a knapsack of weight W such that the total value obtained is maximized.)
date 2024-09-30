@@ -1,0 +1,38 @@
+# Class for an item which stores weight and corresponding value
+class Item:
+    def __init__(self, value, weight):
+        self.value = value
+        self.weight = weight
+
+# Function to get the maximum value that can be put in a knapsack of capacity W
+def fractional_knapsack(W, items, n):
+    # Sorting items by value/weight ratio in decreasing order
+    items.sort(key=lambda x: x.value / x.weight, reverse=True)
+
+    total_value = 0.0  # Variable to store the total value of the knapsack
+    current_weight = 0  # Current weight of the knapsack
+
+    # Loop through all sorted items
+    for item in items:
+        if current_weight + item.weight <= W:
+            # Take the full item
+            total_value += item.value
+            current_weight += item.weight
+        else:
+            # Take the fraction of the item that fits
+            remain = W - current_weight
+            total_value += item.value * (remain / item.weight)
+            break  # Since we can no longer add full items, we exit
+
+    return total_value
+
+# Example usage
+if __name__ == "__main__":
+    # Example items (value, weight)
+    items = [Item(60, 10), Item(100, 20), Item(120, 30)]
+    W = 50  # Capacity of knapsack
+    n = len(items)
+    
+    # Function call
+    max_value = fractional_knapsack(W, items, n)
+    print(f"Maximum value in Knapsack: {max_value}")
