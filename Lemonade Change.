@@ -1,0 +1,28 @@
+def lemonade_change(bills):
+    five, ten = 0, 0  # Initialize counters for $5 and $10 bills
+
+    for bill in bills:
+        if bill == 5:
+            five += 1  # Customer pays with a $5 bill, no change needed
+        elif bill == 10:
+            if five == 0:  # No $5 bills to give as change
+                return False
+            five -= 1  # Give one $5 bill as change
+            ten += 1  # Add one $10 bill to the pool
+        elif bill == 20:
+            if ten > 0 and five > 0:  # Prefer to give one $10 and one $5 as change
+                ten -= 1
+                five -= 1
+            elif five >= 3:  # Otherwise, give three $5 bills as change
+                five -= 3
+            else:  # Not enough change available
+                return False
+
+    return True
+
+# Example usage
+bills = [5, 5, 5, 10, 20]  # Customers paying with $5, $5, $5, $10, and $20
+print("Can give change to all customers:", lemonade_change(bills))
+
+
+
