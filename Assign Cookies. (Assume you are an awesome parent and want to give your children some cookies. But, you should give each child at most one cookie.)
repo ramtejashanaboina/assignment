@@ -1,0 +1,22 @@
+def find_content_children(g, s):
+    # Sort the greed factors and the cookie sizes
+    g.sort()
+    s.sort()
+
+    child = 0  # Pointer for children
+    cookie = 0  # Pointer for cookies
+
+    # Iterate over both lists to find the maximum number of content children
+    while child < len(g) and cookie < len(s):
+        # If the current cookie satisfies the greed of the current child
+        if s[cookie] >= g[child]:
+            child += 1  # Move to the next child
+        cookie += 1  # Whether the cookie satisfies the child or not, move to the next cookie
+
+    return child  # Number of content children
+
+# Example usage
+g = [1, 2, 3]  # Greed factors of children
+s = [1, 1]     # Sizes of cookies
+
+print("Maximum number of content children:", find_content_children(g, s))
